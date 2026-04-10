@@ -21,14 +21,24 @@
       changed_when: false
       failed_when: mk_status.stdout != "Running"
 
+    - name: Create temp directory for manifests
+      file:
+        path: /tmp/k8s_deploy
+        state: directory
+
+    - name: Copy deployment manifest to temp location
+      copy:
+        src: "{{ k8s_manifests_dir }}/deployment.yaml"
+        dest: /tmp/k8s_deploy/deployment.yaml
+        
     - name: Patch deployment image with correct DockerHub username
       replace:
-        path: "{{ k8s_manifests_dir }}/deployment.yaml"
-        regexp: '<YOUR_DOCKERHUB_USERNAME>'
-        replace: "{{ dockerhub_username }}"
+        path: /tmp/k8s_deploy/deployment.yaml
+        regexp: '<YOUR_DOCKERHUB_USERNAME_LOWERCASE>'
+        replace: "{{ dockerhub_username | lower }}"
 
     - name: Apply Kubernetes Deployment
-      command: kubectl apply -f {{ k8s_manifests_dir }}/deployment.yaml
+      command: kubectl apply -f /tmp/k8s_deploy/deployment.yaml
       register: deploy_result
 
     - name: Apply Kubernetes Service

@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ mood_name }} - Music Recommender</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #fff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .back-btn {
+            display: inline-block;
+            margin-bottom: 30px;
+            padding: 10px 20px;
+            background: rgba(0, 153, 255, 0.2);
+            border: 2px solid #0099ff;
+            color: #00d4ff;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .back-btn:hover {
+            background: rgba(0, 153, 255, 0.4);
+            transform: translateX(-3px);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .mood-emoji {
+            font-size: 4em;
+            margin-bottom: 15px;
+        }
+
+        h1 {
+            font-size: 2.5em;
+            background: linear-gradient(135deg, #00d4ff, #0099ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+            text-transform: capitalize;
+        }
+
+        .subtitle {
+            color: #aaa;
+            font-size: 1.1em;
+        }
+
+        .songs-list {
+            list-style: none;
+        }
+
+        .song-item {
+            background: rgba(0, 153, 255, 0.08);
+            border-left: 4px solid #0099ff;
+            padding: 20px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .song-item:hover {
+            background: rgba(0, 153, 255, 0.15);
+            border-left-color: #00d4ff;
+            transform: translateX(5px);
+        }
+
+        .song-number {
+            display: inline-block;
+            background: #0099ff;
+            color: #1a1a2e;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            line-height: 30px;
+            text-align: center;
+            font-weight: 700;
+            margin-right: 15px;
+            font-size: 0.9em;
+        }
+
+        .song-info {
+            display: inline-block;
+            vertical-align: middle;
+        }
+
+        .song-name {
+            font-size: 1.2em;
+            font-weight: 600;
+            color: #fff;
+            display: block;
+        }
+
+        .song-artist {
+            font-size: 0.95em;
+            color: #00d4ff;
+            margin-top: 5px;
+        }
+
+        .youtube-icon {
+            float: right;
+            margin-top: 5px;
+        }
+
+        .youtube-link {
+            display: inline-block;
+            padding: 8px 15px;
+            background: #ff0000;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 5px;
+            font-size: 0.9em;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .youtube-link:hover {
+            background: #cc0000;
+            transform: scale(1.05);
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 50px;
+            padding-top: 20px;
+            border-top: 1px solid #333;
+            color: #666;
+        }
+
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 2em;
+            }
+
+            .mood-emoji {
+                font-size: 3em;
+            }
+
+            .song-item {
+                padding: 15px;
+            }
+
+            .song-name {
+                font-size: 1em;
+            }
+
+            .youtube-link {
+                display: block;
+                margin-top: 10px;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="/" class="back-btn">← Choose Another Mood</a>
+
+        <div class="header">
+            <div class="mood-emoji">{{ mood_data.emoji }}</div>
+            <h1>{{ mood_name }} Music</h1>
+            <p class="subtitle">🎧 Recommended songs for your mood</p>
+        </div>
+
+        <ol class="songs-list">
+            {% for song in mood_data.songs %}
+            <li class="song-item">
+                <span class="song-number">{{ loop.index }}</span>
+                <div class="song-info">
+                    <span class="song-name">{{ song.name }}</span>
+                    <span class="song-artist">by {{ song.artist }}</span>
+                </div>
+                <div class="youtube-icon">
+                    <a href="{{ song.youtube }}" target="_blank" class="youtube-link">🔎 Find on YouTube</a>
+                </div>
+            </li>
+            {% endfor %}
+        </ol>
+
+        <div class="footer">
+            <p>✨ Enjoy your music! Go back to choose another mood or refresh the page.</p>
+        </div>
+    </div>
+</body>
+</html>

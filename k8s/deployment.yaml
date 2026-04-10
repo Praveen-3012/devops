@@ -22,8 +22,8 @@ spec:
     spec:
       containers:
         - name: devops-demo-app
-          # Replace <YOUR_DOCKERHUB_USERNAME> with your actual DockerHub username
-          image: <YOUR_DOCKERHUB_USERNAME>/devops-demo-app:latest
+          # Replace <YOUR_DOCKERHUB_USERNAME> with your actual DockerHub username (lowercase)
+          image: docker.io/<YOUR_DOCKERHUB_USERNAME_LOWERCASE>/devops-demo-app:latest
           imagePullPolicy: Always
           ports:
             - containerPort: 5000
